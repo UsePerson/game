@@ -10,9 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-
       theme: ThemeData(
-
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(title: 'Game'),
@@ -21,29 +19,17 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-
   MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
-
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
@@ -51,35 +37,28 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-
         child: Column(
-
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             TextButton(
               style: ButtonStyle(
-
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
               ),
               onPressed: _sudokuPushSaved,
-              child: Text(
-                  'Sudoku',
+              child: Text('Sudoku',
                   style: TextStyle(
                     fontSize: 40,
-                  )
-              ),
+                  )),
             ),
             TextButton(
               style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
               ),
-              onPressed: () { },
-              child: Text(
-                  'coming soon',
+              onPressed: () {},
+              child: Text('coming soon',
                   style: TextStyle(
                     fontSize: 40,
-                  )
-              ),
+                  )),
             ),
           ],
         ),
@@ -89,38 +68,25 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _sudokuPushSaved() {
     Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => SudokuPage('Sudoku')
-
-      ),
+      MaterialPageRoute(builder: (_) => SudokuPage('Sudoku')),
     );
   }
 }
 
 class SudokuPage extends StatelessWidget {
-
   final String title;
   SudokuPage(this.title);
 
   @override
-  Widget build(BuildContext context){
-
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-
         title: Text(title),
       ),
       body: GestureDetector(
-
-        onTap: () => Navigator.pop(context,'test'),
-        child: Center(
-
-          child : Text("SudokuBoard")
-        ),
+        // onTap: () => ,
+        child: Center(child: Text("SudokuBoard")),
       ),
     );
   }
 }
-
-
-
-
