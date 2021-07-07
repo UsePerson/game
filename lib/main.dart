@@ -61,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
               ),
-              onPressed: () { },
+              onPressed: _pushSaved,
               child: Text(
                   'Sudoku',
                   style: TextStyle(
@@ -86,6 +86,41 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
+
+  void _pushSaved() {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (_) => SudokuPage('Sudoku')
+
+      ),
+    );
+  }
 }
+
+class SudokuPage extends StatelessWidget {
+
+  final String title;
+  SudokuPage(this.title);
+
+  @override
+  Widget build(BuildContext context){
+
+    return Scaffold(
+      appBar: AppBar(
+
+        title: Text(title),
+      ),
+      body: GestureDetector(
+
+        onTap: () => Navigator.pop(context,'test'),
+        child: Center(
+
+          child : Text("SudokuBoard")
+        ),
+      ),
+    );
+  }
+}
+
+
 
 
