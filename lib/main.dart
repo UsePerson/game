@@ -61,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
               ),
-              onPressed: _pushSaved,
+              onPressed: _sudokuPushSaved,
               child: Text(
                   'Sudoku',
                   style: TextStyle(
@@ -87,7 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void _pushSaved() {
+  void _sudokuPushSaved() {
     Navigator.of(context).push(
       MaterialPageRoute(builder: (_) => SudokuPage('Sudoku')
 
