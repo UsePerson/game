@@ -117,14 +117,14 @@ class _TimerCounter extends State<TimerBlock>{
   int time = 0;
   bool stopTimer = true;
   Timer? _timer ;
-  void stopTime(){
+  void counterTime(){
     if(!stopTimer){
       setState(() {
         time += 1;
       });
     }
   }
-  String changeStopText(){
+  String changeButtonText(){
 
     if(stopTimer){
       return "start";
@@ -134,17 +134,14 @@ class _TimerCounter extends State<TimerBlock>{
   @override
   void initState() {
     _timer = Timer.periodic(duration, (timer) {
-      stopTime();
+      counterTime();
     });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    // if(_timer == null)
-    //   _timer = Timer.periodic(duration, (timer) {
-    //     stopTime();
-    //   });
+
     int seconds = time % 60;
     int minutes = time %(60*60) ~/ 60;
     int hours = time ~/ (60 * 60);
@@ -166,10 +163,9 @@ class _TimerCounter extends State<TimerBlock>{
         Container(
           child: ElevatedButton(
             child: Text(
-                changeStopText(),
+                changeButtonText(),
             ),
             onPressed: (){
-
               setState(() {
                 stopTimer = !stopTimer;
               });
