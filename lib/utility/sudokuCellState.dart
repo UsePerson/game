@@ -34,11 +34,12 @@ class CellState {
 
 class CellStateList extends Model{
 
-  int _row = 0;
-  int _col = 0;
+  int _row = -1;
+  int _col = -1;
   List<List<CellState>> _cSL =
     List.generate(9, (index) => List.generate(9, (index) => CellState(Colors.white, "3", "0")));
 
+  List<Color> _keyBoardColor = List.generate(9, (index) => Colors.white);
   void setUserVal(int row, int col, String usrAns){
     _cSL[row][col].setUserVal(usrAns);
     notifyListeners();
@@ -46,6 +47,13 @@ class CellStateList extends Model{
   void setColor(int row, int col, Color color){
     _cSL[row][col].setColor(color);
     notifyListeners();
+  }
+  void setKeyColor(int index, Color c){
+      _keyBoardColor[index] = c;
+      notifyListeners();
+  }
+  Color getKeyColor(int index){
+    return _keyBoardColor[index];
   }
   String getUserVal(int row, int col){
     return _cSL[row][col].getUserVal();

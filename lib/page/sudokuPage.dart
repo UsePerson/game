@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:game/utility/counterTimer.dart';
+import 'package:game/utility/keyBoard.dart';
 import 'package:game/utility/sudokuBoard.dart';
 import 'package:game/utility/sudokuCellState.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -26,8 +27,11 @@ class SudokuPage extends StatelessWidget {
             ScopedModel<CellStateList>(
               model: board,
               child: SudokuBoard(),
+            ),
+            ScopedModel<CellStateList>(
+              model: board,
+              child: KeyBoard(),
             )
-            // keyboard
           ],
         ),
       ),

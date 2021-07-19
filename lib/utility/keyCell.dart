@@ -4,24 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:game/utility/sudokuCellState.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-class SudokuCell extends StatefulWidget{
+class KeyCell extends StatefulWidget{
 
   final int? row, col;
-  SudokuCell(this.row, this.col);
+  KeyCell(this.row, this.col);
   @override
-  _SudokuCell createState() => new _SudokuCell(row!, col!);
+  _KeyCell createState() => new _KeyCell(row!, col!);
 }
 
-class _SudokuCell extends State<SudokuCell>{
+class _KeyCell extends State<KeyCell>{
 
   int row, col;
-  _SudokuCell(this.row, this.col);
+  _KeyCell(this.row, this.col);
 
-  String checkValue(String input){
-    if(input == "0")
-      return "";
-    return input;
-  }
   double blockSize(BuildContext context){
 
     double height = (MediaQuery.of(context).size.height - 200.0) /9;
@@ -29,6 +24,7 @@ class _SudokuCell extends State<SudokuCell>{
 
     return (width < height/2) ? width : min(height, width);
   }
+
   @override
   Widget build(BuildContext context){
     return  ScopedModelDescendant<CellStateList>(builder: (context, child, model) {
@@ -39,31 +35,22 @@ class _SudokuCell extends State<SudokuCell>{
         enableFeedback: true,
         onTap: () {
           setState(() {
-            model.setRow(row);
-            model.setCol(col);
-            for (int r = 0; r < 9; r ++) {
+            for(int i = 0 ; i < 9 ; i ++ ){
 
-              for (int c = 0; c < 9; c ++) {
-
-                if(r == row && c == col){
-                  model.setColor(r, c, Colors.lightBlueAccent);
-                }
-                else if (r == row || c == col) {
-                  model.setColor(r, c, Color(0XFF6FD5FF));
-                }
-                else
-                  model.setColor(r, c, Colors.white);
-              }
+              (i == col)
+                  ? model.setKeyColor(i, Colors.black12)
+                  : model.setKeyColor(i, Colors.white);
             }
+            model.setUserVal(model.row, model.col, (col+1).toString());
           });
         },
         child: SizedBox(
           width: blockSize(context),
           height: blockSize(context),
           child: Container(
-            color: model.getColor(row, col),
+            color: model.getKeyColor(col),
             child: Center(
-              child: Text(checkValue(model.getUserVal(row, col)), style: TextStyle(color: Colors.black, fontSize: 25),)
+                child: Text((col+1).toString(), style: TextStyle(color: Colors.black, fontSize: 25),)
             ),
           ),
         ),
