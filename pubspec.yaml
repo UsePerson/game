@@ -24,6 +24,10 @@ dependencies:
   flutter:
     sdk: flutter
 
+  sudoku99:
+    git:
+      url: https://github.com/HJackH/sudoku99.git
+
 
 
   # The following adds the Cupertino Icons font to your application.
