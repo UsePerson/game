@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:game/utility/sudokuCellState.dart';
 import 'package:scoped_model/scoped_model.dart';
 
+
 class SudokuCell extends StatefulWidget{
 
   final int? row, col;
@@ -46,13 +47,17 @@ class _SudokuCell extends State<SudokuCell>{
               for (int c = 0; c < 9; c ++) {
 
                 if(r == row && c == col){
-                  model.setColor(r, c, Colors.lightBlueAccent);
+                  model.setBackgroundColor(r, c, Colors.lightBlueAccent);
                 }
                 else if (r == row || c == col) {
-                  model.setColor(r, c, Color(0XFF6FD5FF));
+                  model.setBackgroundColor(r, c, Color(0XFF6FD5FF));
                 }
                 else
-                  model.setColor(r, c, Colors.white);
+                  model.setBackgroundColor(r, c, Colors.white);
+
+                (model.getUserVal(r, c) == model.getUserVal(row, col))
+                ? model.setTextColor(r, c, Colors.orange)
+                : model.setTextColor(r, c, Colors.black);
               }
             }
           });
@@ -61,9 +66,9 @@ class _SudokuCell extends State<SudokuCell>{
           width: blockSize(context),
           height: blockSize(context),
           child: Container(
-            color: model.getColor(row, col),
+            color: model.getBackgroundColor(row, col),
             child: Center(
-              child: Text(checkValue(model.getUserVal(row, col)), style: TextStyle(color: Colors.black, fontSize: 25),)
+              child: Text(checkValue(model.getUserVal(row, col)), style: TextStyle(color: model.getTextColor(row, col), fontSize: 25),)
             ),
           ),
         ),

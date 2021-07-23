@@ -12,7 +12,7 @@ class _TimerCounter extends State<TimerBlock>{
 
   static const duration = const Duration(seconds: 1);
   int time = 0;
-  bool stopTimer = true;
+  bool stopTimer = false;
   Timer? _timer ;
   void counterTime(){
     if(!stopTimer){

@@ -35,20 +35,32 @@ class _KeyCell extends State<KeyCell>{
         enableFeedback: true,
         onTap: () {
           setState(() {
-            for(int i = 0 ; i < 9 ; i ++ ){
 
-              (i == col)
-                  ? model.setKeyColor(i, Colors.black12)
-                  : model.setKeyColor(i, Colors.white);
+            if(model.getAnsVal(model.row, model.col) != model.getUserVal(model.row, model.col))
+              model.setUserVal(model.row, model.col, (col+1).toString());
+
+            for(int r = 0 ; r < 9 ; r ++ ){
+
+              for(int c = 0 ; c < 9 ; c ++){
+
+                (model.getUserVal(r, c) == (col+1).toString())
+                    ? model.setTextColor(r, c, Colors.orange)
+                    : model.setTextColor(r, c, Colors.black);
+              }
+              (r == col)
+                  ? model.setKeyColor(r, Colors.black12)
+                  : model.setKeyColor(r, Colors.white);
             }
-            model.setUserVal(model.row, model.col, (col+1).toString());
+            if(model.getAnsVal(model.row, model.col) != model.getUserVal(model.row, model.col))
+              model.setTextColor(model.row, model.col, Colors.red);
+
           });
         },
         child: SizedBox(
           width: blockSize(context),
           height: blockSize(context),
           child: Container(
-            color: model.getKeyColor(col),
+            color: model.getKeyBoardColor(col),
             child: Center(
                 child: Text((col+1).toString(), style: TextStyle(color: Colors.black, fontSize: 25),)
             ),
