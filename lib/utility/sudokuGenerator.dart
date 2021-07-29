@@ -1,13 +1,5 @@
-import 'dart:async';
 import 'dart:math';
 import 'package:sudoku99/sudoku99.dart';
-
-//    so easy : Given 50 up
-//       easy : Given 36 ~ 49
-//     medium : Given 32 ~ 35
-//  difficult : Given 28 ~ 31
-//       evil : Given 22 ~ 27
-
 
 class SudokuGenerator {
 
@@ -22,26 +14,23 @@ class SudokuGenerator {
 
     for(int i = 0 ; i < _boardSize ; i += _boxSize)
       fillBox(i, i);
-    
   }
   void fillBox(int row, int col){
 
     int num;
+
     for (int i = 0 ; i < _boxSize ; i ++ ){
 
       for(int j = 0 ; j < _boxSize ; j ++ ){
 
         do{
-
           num = randomGenerator(_boardSize);
-
         }while(!inBoxValid(row, col, num));
         _board[row + i][col + j] = num;
       }
     }
   }
   int randomGenerator(int maxNum) {
-
     // random 1~9
     return rand.nextInt(maxNum)+1;
   }
@@ -52,6 +41,7 @@ class SudokuGenerator {
       for(int j = 0 ; j < _boxSize ; j ++ ){
 
         if(_board[i + row][j + col] == num)
+
           return false;
       }
     }
@@ -160,14 +150,11 @@ class SudokuGenerator {
       if(cnt >= 300)
         return false;
     }
-
-    print('loop : $cnt');
     return true;
   }
 
   int getBoard(int r, int c){
     return _board[r][c];
   }
-
 
 }

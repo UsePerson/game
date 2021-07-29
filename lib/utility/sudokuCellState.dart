@@ -28,6 +28,7 @@ class CellState {
   Color getTextColor(){
     return this._textColor;
   }
+
   void setAnsVal(String input){
 
     this._ansVal = input;
@@ -50,6 +51,8 @@ class CellStateList extends Model{
 
   int _row = -1;
   int _col = -1;
+  int _error = 0;
+  int _correct = 0;
   SudokuGenerator _generator = new SudokuGenerator();
   var rand = new Random();
 
@@ -65,24 +68,39 @@ class CellStateList extends Model{
     _generator.fillDiagonal();
     _generator.fillRemaining(0, 3);
 
-    // set answer
-    for(int i = 0 ; i < 9 ; i ++)
-      for(int j = 0 ; j < 9 ; j++)
-        _cSL[i][j].setAnsVal(_generator.getBoard(i, j).toString());
-
+    initAns();
     _generator.removeKDigits(ra);
+    initUserAns();
+  }
+  void initAns(){
+    for(int i = 0 ; i < 9 ; i ++) {
+      for (int j = 0; j < 9; j++) {
+        _cSL[i][j].setAnsVal(_generator.getBoard(i, j).toString());
+      }
+    }
+  }
+  void initUserAns(){
     for(int r = 0 ; r < 9 ;r ++ ){
 
       for(int c = 0 ; c < 9 ;c ++){
 
         _cSL[r][c].setUserVal(_generator.getBoard(r, c).toString());
-
+        if (_cSL[r][c].getUserVal() != "0")
+          _correct++;
       }
     }
   }
 
-  void setAnsVal(int row, int col, String Ans){
-    _cSL[row][col].setAnsVal(Ans);
+  void incError(){
+    this._error ++;
+    notifyListeners();
+  }
+  void incCorrect(){
+    this._correct++;
+  }
+
+  void setAnsVal(int row, int col, String ans){
+    _cSL[row][col].setAnsVal(ans);
     notifyListeners();
   }
   void setUserVal(int row, int col, String usrAns){
@@ -110,7 +128,6 @@ class CellStateList extends Model{
     notifyListeners();
   }
 
-
   Color getKeyBoardColor(int index){
     return _keyBoardColor[index];
   }
@@ -127,15 +144,9 @@ class CellStateList extends Model{
 
     return _cSL[row][col].getAnsVal();
   }
+
   int get row => _row;
   int get col => _col;
-
-  void removeUserVal(int row, int col, String usrAns){
-    _cSL[row][col].setUserVal("0");
-    notifyListeners();
-  }
-
-
-
-
+  int get error => _error;
+  int get correct => _correct;
 }

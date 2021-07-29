@@ -1,6 +1,9 @@
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:game/page/sudokuPage.dart';
+import 'package:game/utility/sudokuCellState.dart';
+import 'package:scoped_model/scoped_model.dart';
 import 'keyCell.dart';
 
 class KeyBoard extends StatelessWidget{
@@ -39,15 +42,49 @@ class KeyBoard extends StatelessWidget{
   }
   @override
   Widget build(BuildContext context){
+    return ScopedModelDescendant<CellStateList>(builder: (context, child, model){
+      if(model.error == 3 || model.correct==81) // end Game state
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            (model.error == 3 )?
+            Text('You Lose!!!  ',style: TextStyle(fontSize: 30)) : Text('You Win!!!  ',style: TextStyle(fontSize: 30)),
+            Container(
+              child: ElevatedButton(
+                child:
+                Text('Leave'),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+              margin: EdgeInsets.only(left: 10,right: 10),
+            ),
+            Container(
+              child: ElevatedButton(
+                child: Text('Restart'),
+                onPressed: () {
+                  // Navigator.pop(context);
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) => new SudokuPage('Sudoku')));
+                  // Navigator.pushNamed(context, "Sudoku");
+                },
+              ),
+            ),
+          ],
+        );
 
-    return Table(
-      defaultColumnWidth: FixedColumnWidth(defaultWidth(context)),
-      border: TableBorder(
-        left: BorderSide(width: 3.0, color: Colors.white),
-        top: BorderSide(width: 3.0, color: Colors.white),
-      ),
-      defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-      children: _getTableRows(),
-    );
+      return Table(
+        defaultColumnWidth: FixedColumnWidth(defaultWidth(context)),
+        border: TableBorder(
+          left: BorderSide(width: 3.0, color: Colors.white),
+          top: BorderSide(width: 3.0, color: Colors.white),
+        ),
+        defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+
+        children: _getTableRows(),
+      );
+    });
   }
 }

@@ -24,7 +24,29 @@ class _KeyCell extends State<KeyCell>{
 
     return (width < height/2) ? width : min(height, width);
   }
-
+  void changeTextColor(CellStateList model, int r, int c){
+    (model.getUserVal(r, c) == (col+1).toString())
+        ? model.setTextColor(r, c, Color(0xFF8457EF))
+        : model.setTextColor(r, c, Colors.black);
+  }
+  void highlightKeyColor(CellStateList model, int r){
+    (r == col)
+        ? model.setKeyColor(r, Colors.black12)
+        : model.setKeyColor(r, Colors.white);
+  }
+  void setUserAns(CellStateList model){
+    if(model.getAnsVal(model.row, model.col) != model.getUserVal(model.row, model.col))
+      model.setUserVal(model.row, model.col, (col+1).toString());
+  }
+  void checkUserAns(CellStateList model){
+    if(model.getAnsVal(model.row, model.col) != model.getUserVal(model.row, model.col)) {
+      model.setTextColor(model.row, model.col, Colors.red);
+      model.incError();
+    }
+    else{
+      model.incCorrect();
+    }
+  }
   @override
   Widget build(BuildContext context){
     return  ScopedModelDescendant<CellStateList>(builder: (context, child, model) {
@@ -36,24 +58,16 @@ class _KeyCell extends State<KeyCell>{
         onTap: () {
           setState(() {
 
-            if(model.getAnsVal(model.row, model.col) != model.getUserVal(model.row, model.col))
-              model.setUserVal(model.row, model.col, (col+1).toString());
-
+            setUserAns(model);
             for(int r = 0 ; r < 9 ; r ++ ){
 
               for(int c = 0 ; c < 9 ; c ++){
 
-                (model.getUserVal(r, c) == (col+1).toString())
-                    ? model.setTextColor(r, c, Colors.orange)
-                    : model.setTextColor(r, c, Colors.black);
+                changeTextColor(model, r, c); // same number become to another color
               }
-              (r == col)
-                  ? model.setKeyColor(r, Colors.black12)
-                  : model.setKeyColor(r, Colors.white);
+              highlightKeyColor(model, r);
             }
-            if(model.getAnsVal(model.row, model.col) != model.getUserVal(model.row, model.col))
-              model.setTextColor(model.row, model.col, Colors.red);
-
+            checkUserAns(model); // if user ans is not correct, set red and add incorrect times
           });
         },
         child: SizedBox(

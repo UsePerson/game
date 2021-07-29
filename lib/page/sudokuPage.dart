@@ -23,7 +23,11 @@ class SudokuPage extends StatelessWidget {
         // onTap: ()
         child: Column(
           children: [
-            TimerBlock(),
+            ScopedModel<CellStateList>(
+              model: board,
+              child: TimerBlock(),
+            ),
+
             ScopedModel<CellStateList>(
               model: board,
               child: SudokuBoard(),

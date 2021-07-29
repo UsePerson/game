@@ -56,8 +56,11 @@ class _SudokuCell extends State<SudokuCell>{
                   model.setBackgroundColor(r, c, Colors.white);
 
                 (model.getUserVal(r, c) == model.getUserVal(row, col))
-                ? model.setTextColor(r, c, Colors.orange)
+                ? model.setTextColor(r, c, Color(0xFF8457EF))
                 : model.setTextColor(r, c, Colors.black);
+
+                if( (model.getUserVal(r, c) != "0") && (model.getUserVal(r, c) != model.getAnsVal(r, c)))
+                  model.setTextColor(r, c, Colors.red);
               }
             }
           });
