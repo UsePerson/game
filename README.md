@@ -6,4 +6,5 @@ A Flutter project contains little games.
 
 - [ ] To do
   - [X] Error 3/3 to end
-  - [ ] when use a numbe 9 times, could disable
+  - [ ] when use a number 9 times, could disable
+  - [ ] when stop timer, board number invisible
