@@ -72,7 +72,7 @@ jobs:
         run: flutter pub get
         
       - name: Build web
-        run: flutter build web --no-sound-null-safety
+        run: flutter build web --release
         
       - name: Move web assets
         run: |
