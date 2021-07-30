@@ -82,6 +82,7 @@ class _TimerCounter extends State<TimerBlock>{
                 onPressed: () {
                   setState(() {
                     stopTimer = !stopTimer;
+                    model.setStop();
                   });
                 },
               ),

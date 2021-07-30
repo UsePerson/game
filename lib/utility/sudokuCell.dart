@@ -18,6 +18,23 @@ class _SudokuCell extends State<SudokuCell>{
   int row, col;
   _SudokuCell(this.row, this.col);
 
+  void setBackground(CellStateList model, int r, int c){
+    if(r == row && c == col){
+      model.setBackgroundColor(r, c, Colors.lightBlueAccent);
+    }
+    else if (r == row || c == col) {
+      model.setBackgroundColor(r, c, Color(0XFF6FD5FF));
+    }
+    else
+      model.setBackgroundColor(r, c, Colors.white);
+  }
+  void setTextColor(CellStateList model, int r, int c){
+    (model.getUserVal(r, c) == model.getUserVal(row, col))
+        ? model.setTextColor(r, c, Color(0xFF8457EF))
+        : model.setTextColor(r, c, Colors.black);
+    if( (model.getUserVal(r, c) != "0") && (model.getUserVal(r, c) != model.getAnsVal(r, c)))
+      model.setTextColor(r, c, Colors.red);
+  }
   String checkValue(String input){
     if(input == "0")
       return "";
@@ -46,21 +63,8 @@ class _SudokuCell extends State<SudokuCell>{
 
               for (int c = 0; c < 9; c ++) {
 
-                if(r == row && c == col){
-                  model.setBackgroundColor(r, c, Colors.lightBlueAccent);
-                }
-                else if (r == row || c == col) {
-                  model.setBackgroundColor(r, c, Color(0XFF6FD5FF));
-                }
-                else
-                  model.setBackgroundColor(r, c, Colors.white);
-
-                (model.getUserVal(r, c) == model.getUserVal(row, col))
-                ? model.setTextColor(r, c, Color(0xFF8457EF))
-                : model.setTextColor(r, c, Colors.black);
-
-                if( (model.getUserVal(r, c) != "0") && (model.getUserVal(r, c) != model.getAnsVal(r, c)))
-                  model.setTextColor(r, c, Colors.red);
+                setBackground(model, r, c);
+                setTextColor(model, r, c);
               }
             }
           });

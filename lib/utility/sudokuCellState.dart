@@ -53,17 +53,19 @@ class CellStateList extends Model{
   int _col = -1;
   int _error = 0;
   int _correct = 0;
+  bool _stop = false;
   SudokuGenerator _generator = new SudokuGenerator();
   var rand = new Random();
 
-  List<List<CellState>> _cSL = List.generate(9, (r) => List.generate(9, (c) =>
 
+  List<List<CellState>> _cSL = List.generate(9, (r) => List.generate(9, (c) =>
       CellState(Colors.white, Colors.black, "1", "2")));
+
   List<Color> _keyBoardColor = List.generate(9, (index) => Colors.white);
 
   CellStateList(){
 
-    int ra = rand.nextInt(60)+20;
+    int ra = rand.nextInt(65)+15;
 
     _generator.fillDiagonal();
     _generator.fillRemaining(0, 3);
@@ -127,6 +129,10 @@ class CellStateList extends Model{
     _col = value;
     notifyListeners();
   }
+  void setStop(){
+    this._stop = !this._stop;
+    notifyListeners();
+  }
 
   Color getKeyBoardColor(int index){
     return _keyBoardColor[index];
@@ -138,7 +144,9 @@ class CellStateList extends Model{
     return _cSL[row][col].getTextColor();
   }
   String getUserVal(int row, int col){
-    return _cSL[row][col].getUserVal();
+    if(stop == false)
+      return _cSL[row][col].getUserVal();
+    return "0";
   }
   String getAnsVal(int row, int col){
 
@@ -149,4 +157,5 @@ class CellStateList extends Model{
   int get col => _col;
   int get error => _error;
   int get correct => _correct;
+  bool get stop => _stop;
 }
