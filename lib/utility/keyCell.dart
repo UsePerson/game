@@ -53,6 +53,18 @@ class _KeyCell extends State<KeyCell>{
   @override
   Widget build(BuildContext context){
     return  ScopedModelDescendant<CellStateList>(builder: (context, child, model) {
+      if(model.stop)
+        return InkResponse(
+          highlightColor: Colors.transparent,
+          splashColor: Colors.transparent,
+          radius: 0.0,
+          enableFeedback: true,
+          child: SizedBox(
+            width: blockSize(context),
+            height: blockSize(context),
+          ),
+        );
+      else
       return InkResponse(
         highlightColor: Colors.transparent,
         splashColor: Colors.transparent,

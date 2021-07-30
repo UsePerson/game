@@ -50,6 +50,18 @@ class _SudokuCell extends State<SudokuCell>{
   @override
   Widget build(BuildContext context){
     return  ScopedModelDescendant<CellStateList>(builder: (context, child, model) {
+     if(model.stop)
+       return InkResponse(
+         highlightColor: Colors.transparent,
+         splashColor: Colors.transparent,
+         radius: 0.0,
+         enableFeedback: true,
+         child: SizedBox(
+          width: blockSize(context),
+          height: blockSize(context),
+         ),
+       );
+     else
       return InkResponse(
         highlightColor: Colors.transparent,
         splashColor: Colors.transparent,
@@ -60,9 +72,7 @@ class _SudokuCell extends State<SudokuCell>{
             model.setRow(row);
             model.setCol(col);
             for (int r = 0; r < 9; r ++) {
-
               for (int c = 0; c < 9; c ++) {
-
                 setBackground(model, r, c);
                 setTextColor(model, r, c);
               }
