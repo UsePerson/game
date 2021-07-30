@@ -1,4 +1,4 @@
-name: Flutter Test
+name: Flutter
 
 # Controls when the workflow will run
 on:
@@ -43,8 +43,8 @@ jobs:
       - name: Analyze
         run: flutter analyze
 
-      - name: Run tests
-        run: flutter test
+#       - name: Run tests
+#         run: flutter test
         
         
   build-web:
