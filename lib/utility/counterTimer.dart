@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:game/utility/sudokuCellState.dart';
@@ -61,17 +62,16 @@ class _TimerCounter extends State<TimerBlock>{
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text(
-            "  " + hours.toString().padLeft(2, '0') + " : ",
-            style: TextStyle(fontSize: 30),
-          ),
-          Text(
-            minutes.toString().padLeft(2, '0') + " : ",
-            style: TextStyle(fontSize: 28),
-          ),
-          Text(
-            seconds.toString().padLeft(2, '0') + "  ",
-            style: TextStyle(fontSize: 28),
+          Expanded(
+            child:
+              Align(
+                alignment: Alignment.centerRight,
+                child: AutoSizeText(
+                      "  " + hours.toString().padLeft(2, '0') + " : " + minutes.toString().padLeft(2, '0') + " : " + seconds.toString().padLeft(2, '0') + "  ",
+                      style: TextStyle(fontSize: 30),
+                      maxLines: 1,
+                  ),
+              ),
           ),
           if(!endGame(model))
             Container(
@@ -87,11 +87,14 @@ class _TimerCounter extends State<TimerBlock>{
                 },
               ),
             ),
-
-          Text(
-            "  ERROR: " + model.error.toString() + "/" + "3",
-            style: TextStyle(fontSize: 28),
-          )
+          Expanded(
+            child:
+              AutoSizeText(
+              "  ERROR: " + model.error.toString() + "/3",
+              style: TextStyle(fontSize: 30),
+              maxLines: 1,
+            ),
+          ),
         ],
       );
     });
