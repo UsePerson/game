@@ -45,6 +45,9 @@ class _KeyCell extends State<KeyCell>{
     }
     else{
       model.incCorrect();
+      model.incKeyNumber(col+1);
+      if(model.getKeyBoard(col+1) == "9")
+        model.setKeyColor(col, Colors.white);
     }
   }
   @override
@@ -58,16 +61,18 @@ class _KeyCell extends State<KeyCell>{
         onTap: () {
           setState(() {
 
-            setUserAns(model);
-            for(int r = 0 ; r < 9 ; r ++ ){
+            if(model.getKeyBoard(col+1) != "9"){
+              setUserAns(model);
+              for(int r = 0 ; r < 9 ; r ++ ){
 
-              for(int c = 0 ; c < 9 ; c ++){
+                for(int c = 0 ; c < 9 ; c ++){
 
-                changeTextColor(model, r, c); // same number become to another color
+                  changeTextColor(model, r, c); // same number become to another color
+                }
+                highlightKeyColor(model, r);
               }
-              highlightKeyColor(model, r);
+              checkUserAns(model); // if user ans is not correct, set red and add incorrect times
             }
-            checkUserAns(model); // if user ans is not correct, set red and add incorrect times
           });
         },
         child: SizedBox(
@@ -76,7 +81,7 @@ class _KeyCell extends State<KeyCell>{
           child: Container(
             color: model.getKeyBoardColor(col),
             child: Center(
-                child: Text((col+1).toString(), style: TextStyle(color: Colors.black, fontSize: 25),)
+                child:  Text( (model.getKeyBoard(col+1) != "9")?(col+1).toString(): " ", style: TextStyle(color: Colors.black, fontSize: 25),)
             ),
           ),
         ),

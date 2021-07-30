@@ -62,7 +62,7 @@ class CellStateList extends Model{
       CellState(Colors.white, Colors.black, "1", "2")));
 
   List<Color> _keyBoardColor = List.generate(9, (index) => Colors.white);
-
+  List<int> _keyBoard = List.generate(10, (index) => 0);
   CellStateList(){
 
     int ra = rand.nextInt(65)+15;
@@ -89,6 +89,7 @@ class CellStateList extends Model{
         _cSL[r][c].setUserVal(_generator.getBoard(r, c).toString());
         if (_cSL[r][c].getUserVal() != "0")
           _correct++;
+        _keyBoard[int.parse(_cSL[r][c].getUserVal())]++;
       }
     }
   }
@@ -99,6 +100,10 @@ class CellStateList extends Model{
   }
   void incCorrect(){
     this._correct++;
+  }
+  void incKeyNumber(int position){
+    _keyBoard[position]++;
+    notifyListeners();
   }
 
   void setAnsVal(int row, int col, String ans){
@@ -142,6 +147,9 @@ class CellStateList extends Model{
   }
   Color getTextColor(int row, int col){
     return _cSL[row][col].getTextColor();
+  }
+  String getKeyBoard(int position){
+    return this._keyBoard[position].toString();
   }
   String getUserVal(int row, int col){
     if(stop == false)
