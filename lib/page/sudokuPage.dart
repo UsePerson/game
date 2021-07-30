@@ -7,14 +7,12 @@ import 'package:game/utility/sudokuCellState.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class SudokuPage extends StatelessWidget {
-
-  CellStateList board = CellStateList();
+  final CellStateList board = CellStateList();
   final String title;
   SudokuPage(this.title);
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
@@ -27,7 +25,6 @@ class SudokuPage extends StatelessWidget {
               model: board,
               child: TimerBlock(),
             ),
-
             ScopedModel<CellStateList>(
               model: board,
               child: SudokuBoard(),
@@ -42,4 +39,3 @@ class SudokuPage extends StatelessWidget {
     );
   }
 }
-
