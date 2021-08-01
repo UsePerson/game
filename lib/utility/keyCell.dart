@@ -24,6 +24,10 @@ class _KeyCell extends State<KeyCell>{
 
     return (width < height/2) ? width : min(height, width);
   }
+  void setUserAns(CellStateList model){
+    if(model.getAnsVal(model.row, model.col) != model.getUserVal(model.row, model.col))
+      model.setUserVal(model.row, model.col, (col+1).toString());
+  }
   void changeTextColor(CellStateList model, int r, int c){
     (model.getUserVal(r, c) == (col+1).toString())
         ? model.setTextColor(r, c, Color(0xFF8457EF))
@@ -33,10 +37,6 @@ class _KeyCell extends State<KeyCell>{
     (r == col)
         ? model.setKeyColor(r, Colors.black12)
         : model.setKeyColor(r, Colors.white);
-  }
-  void setUserAns(CellStateList model){
-    if(model.getAnsVal(model.row, model.col) != model.getUserVal(model.row, model.col))
-      model.setUserVal(model.row, model.col, (col+1).toString());
   }
   void checkUserAns(CellStateList model){
     if(model.getAnsVal(model.row, model.col) != model.getUserVal(model.row, model.col)) {
@@ -65,39 +65,45 @@ class _KeyCell extends State<KeyCell>{
           ),
         );
       else
-      return InkResponse(
-        highlightColor: Colors.transparent,
-        splashColor: Colors.transparent,
-        radius: 0.0,
-        enableFeedback: true,
-        onTap: () {
-          setState(() {
+        return InkResponse(
+          highlightColor: Colors.transparent,
+          splashColor: Colors.transparent,
+          radius: 0.0,
+          enableFeedback: true,
+          onTap: () {
+            setState(() {
 
-            if(model.getKeyBoard(col+1) != "9"){
-              setUserAns(model);
-              for(int r = 0 ; r < 9 ; r ++ ){
+              if(model.getKeyBoard(col+1) != "9"){
+                setUserAns(model);
+                for(int r = 0 ; r < 9 ; r ++ ){
 
-                for(int c = 0 ; c < 9 ; c ++){
+                  for(int c = 0 ; c < 9 ; c ++){
 
-                  changeTextColor(model, r, c); // same number become to another color
+                    changeTextColor(model, r, c); // same number become to another color
+                  }
+                  highlightKeyColor(model, r);
                 }
-                highlightKeyColor(model, r);
+                checkUserAns(model); // if user ans is not correct, set red and add incorrect times
               }
-              checkUserAns(model); // if user ans is not correct, set red and add incorrect times
-            }
-          });
-        },
-        child: SizedBox(
-          width: blockSize(context),
-          height: blockSize(context),
-          child: Container(
-            color: model.getKeyBoardColor(col),
-            child: Center(
-                child:  Text( (model.getKeyBoard(col+1) != "9")?(col+1).toString(): " ", style: TextStyle(color: Colors.black, fontSize: 25),)
+            });
+          },
+          child: SizedBox(
+            width: blockSize(context),
+            height: blockSize(context),
+            child: Container(
+              color: model.getKeyBoardColor(col),
+              child: Center(
+                  child:
+                  Text(
+                    (model.getKeyBoard(col+1) != "9")
+                      ?(col+1).toString()
+                      : " ", 
+                    style: TextStyle(color: Colors.black, fontSize: 25),
+                  )
+              ),
             ),
           ),
-        ),
-      );
+        );
     });
   }
 }

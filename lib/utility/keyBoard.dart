@@ -47,8 +47,9 @@ class KeyBoard extends StatelessWidget{
         return Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            (model.error == 3 )?
-            Text('You Lose!!!  ',style: TextStyle(fontSize: 30)) : Text('You Win!!!  ',style: TextStyle(fontSize: 30)),
+            (model.error == 3 )
+                ? Text('You Lose!!!  ',style: TextStyle(fontSize: 30))
+                : Text('You Win!!!  ',style: TextStyle(fontSize: 30)),
             Container(
               child: ElevatedButton(
                 child:
@@ -63,12 +64,10 @@ class KeyBoard extends StatelessWidget{
               child: ElevatedButton(
                 child: Text('Restart'),
                 onPressed: () {
-                  // Navigator.pop(context);
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                           builder: (BuildContext context) => new SudokuPage('Sudoku')));
-                  // Navigator.pushNamed(context, "Sudoku");
                 },
               ),
             ),
@@ -76,15 +75,15 @@ class KeyBoard extends StatelessWidget{
         );
 
       return Table(
-        defaultColumnWidth: FixedColumnWidth(defaultWidth(context)),
-        border: TableBorder(
-          left: BorderSide(width: 3.0, color: Colors.white),
-          top: BorderSide(width: 3.0, color: Colors.white),
-        ),
-        defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+          defaultColumnWidth: FixedColumnWidth(defaultWidth(context)),
+          border: TableBorder(
+            left: BorderSide(width: 3.0, color: Colors.white),
+            top: BorderSide(width: 3.0, color: Colors.white),
+          ),
+          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
 
-        children: _getTableRows(),
-      );
+          children: _getTableRows(),
+        );
     });
   }
 }
