@@ -32,6 +32,8 @@ class _KeyCell extends State<KeyCell>{
     (model.getUserVal(r, c) == (col+1).toString())
         ? model.setTextColor(r, c, Color(0xFF8457EF))
         : model.setTextColor(r, c, Colors.black);
+    if(model.getAnsVal(r, c) != model.getUserVal(r, c))
+      model.setTextColor(r, c, Colors.red);
   }
   void highlightKeyColor(CellStateList model, int r){
     (r == col)
@@ -40,7 +42,6 @@ class _KeyCell extends State<KeyCell>{
   }
   void checkUserAns(CellStateList model){
     if(model.getAnsVal(model.row, model.col) != model.getUserVal(model.row, model.col)) {
-      model.setTextColor(model.row, model.col, Colors.red);
       model.incError();
     }
     else{

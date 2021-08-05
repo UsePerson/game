@@ -75,17 +75,15 @@ class CellStateList extends Model{
     initUserAns();
   }
   void initAns(){
-    for(int i = 0 ; i < 9 ; i ++) {
-      for (int j = 0; j < 9; j++) {
-        _cSL[i][j].setAnsVal(_generator.getBoard(i, j).toString());
+    for(int r = 0 ; r < 9 ;r ++ ){
+      for(int c = 0 ; c < 9 ;c ++){
+        _cSL[r][c].setAnsVal(_generator.getBoard(r, c).toString());
       }
     }
   }
   void initUserAns(){
     for(int r = 0 ; r < 9 ;r ++ ){
-
       for(int c = 0 ; c < 9 ;c ++){
-
         _cSL[r][c].setUserVal(_generator.getBoard(r, c).toString());
         if (_cSL[r][c].getUserVal() != "0")
           _correct++;
