@@ -24,7 +24,20 @@ class _KeyCell extends State<KeyCell>{
 
     return (width < height/2) ? width : min(height, width);
   }
+  void checkUserAns(CellStateList model){
+    if((model.getAnsVal(model.row, model.col) != (col+1).toString()) && (model.getAnsVal(model.row, model.col) != model.getUserVal(model.row, model.col))) {
+      model.incError();
+    }
+    else if(model.getAnsVal(model.row, model.col) != model.getUserVal(model.row, model.col)){
+
+      model.incCorrect();
+      model.incKeyNumber(col+1);
+
+    }
+  }
   void setUserAns(CellStateList model){
+
+    checkUserAns(model);
     if(model.getAnsVal(model.row, model.col) != model.getUserVal(model.row, model.col))
       model.setUserVal(model.row, model.col, (col+1).toString());
   }
@@ -40,17 +53,7 @@ class _KeyCell extends State<KeyCell>{
         ? model.setKeyColor(r, Colors.black12)
         : model.setKeyColor(r, Colors.white);
   }
-  void checkUserAns(CellStateList model){
-    if(model.getAnsVal(model.row, model.col) != model.getUserVal(model.row, model.col)) {
-      model.incError();
-    }
-    else{
-      model.incCorrect();
-      model.incKeyNumber(col+1);
-      if(model.getKeyBoard(col+1) == "9")
-        model.setKeyColor(col, Colors.white);
-    }
-  }
+
   @override
   Widget build(BuildContext context){
     return  ScopedModelDescendant<CellStateList>(builder: (context, child, model) {
@@ -75,7 +78,8 @@ class _KeyCell extends State<KeyCell>{
             setState(() {
 
               if(model.getKeyBoard(col+1) != "9"){
-                setUserAns(model);
+
+                setUserAns(model); // if user ans is not correct, set red and add incorrect times
                 for(int r = 0 ; r < 9 ; r ++ ){
 
                   for(int c = 0 ; c < 9 ; c ++){
@@ -84,7 +88,8 @@ class _KeyCell extends State<KeyCell>{
                   }
                   highlightKeyColor(model, r);
                 }
-                checkUserAns(model); // if user ans is not correct, set red and add incorrect times
+                if(model.getKeyBoard(col+1) == "9")
+                  model.setKeyColor(col, Colors.white);
               }
             });
           },
