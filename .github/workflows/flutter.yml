@@ -40,6 +40,9 @@ jobs:
       - name: Restore packages
         run: flutter pub get
         
+      - name: check lockfile
+        run: git status
+        
       - name: Analyze
         run: flutter analyze
 
