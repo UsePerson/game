@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'sudokuGenerator.dart';
 import 'package:scoped_model/scoped_model.dart';
